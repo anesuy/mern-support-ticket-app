@@ -13,8 +13,8 @@ connectDB()
 //translating data
 app.use(express.json()) //used to happen using body-parser, but now express has this functionality
 app.use(express.urlencoded({extended: false}))
-//APP GET
 
+//APP GET
 app.get('/', (req, res) => {
   res.status(200).json({message:'Hello'});
   //res.send()
