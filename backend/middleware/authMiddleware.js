@@ -10,10 +10,15 @@ const protect = asyncHandler(async (req, res, next) => {
         token = req.headers.authorization.split(' ')[1]
 
         //Verify token
-        const decoded = jwt.verify(token, process.env.JSONWEBSECRET)
+        const decoded = jwb.verify(token, process.env.JSONWEBSECRET)
 
-        //Get user from toekn
-        req.user = await user.findById(decoded.id).select('-password')
+        //Get user from token
+        req.user = await User.findById(decoded.id).select('-password')
+        //checking i the user was found
+          if (!req.user) {
+            res.status(401)
+            throw new Error('Not authorized')
+          }
         next()
       } catch (error) {
         console.log(error)
@@ -28,4 +33,4 @@ const protect = asyncHandler(async (req, res, next) => {
     }
 })
 
-module.exports = {protect}
+module.exports = {protect};

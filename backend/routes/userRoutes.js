@@ -1,8 +1,7 @@
 const express = require('express')
-const { appendFile } = require('fs')
 const router = express.Router()
-const { registerUser, loginUser , getMe} = require ('../controllers/userController')
-const {protect} = ('../middleware/authMiddleare')
+const { registerUser, loginUser , getMe } = require ('../controllers/userController')
+const { protect } = require('../middleware/authMiddleware')
 
 //withour the userController file 
 
