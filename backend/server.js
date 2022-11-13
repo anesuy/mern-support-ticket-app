@@ -1,5 +1,6 @@
 const express = require("express")
 const colors = require("colors")
+const cors = require('cors')
 const dotenv = require("dotenv").config()
 const { errorHandler } = require('./middleware/errorMiddleware')
 const connectDB = require('./config/db')
@@ -19,6 +20,8 @@ app.get('/', (req, res) => {
   res.status(200).json({message:'Hello'});
   //res.send()
 })
+
+app.use(cors())
 
 //Routes
 app.use('/api/users', require('./routes/userRoutes'))

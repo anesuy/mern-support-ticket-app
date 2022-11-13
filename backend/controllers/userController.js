@@ -2,15 +2,16 @@ const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcryptjs')
 const jsonwebtoken = require('jsonwebtoken')
 
-const User = require('../models/userModel')()
+const User = require('../models/userModel');
 
 //@description = register a new user
 //@route /api/routes
 //@access Public
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body
+  
   //validation 
-  if (!name || !email || password ){
+  if (!name || !email || !password ){
     //return res.status(400).json({message:'Please, include all fields'})
     // OR -> error handler
     res.status(400)
@@ -32,6 +33,7 @@ const registerUser = asyncHandler(async (req, res) => {
     email: email, 
     password: hashedPassword
   })
+    
     if (user) {
       res.status(201).json({
         _id: user._id, 
@@ -41,9 +43,8 @@ const registerUser = asyncHandler(async (req, res) => {
       })
     } else {
       res.status(400) 
-      throw new error('Invalid user data')
+      throw new Error('Invalid user data')
     }
-  //res.send('Register Route') (not needed anymore)
 })
 
 //@description            = login a user
@@ -51,6 +52,7 @@ const registerUser = asyncHandler(async (req, res) => {
 //@access                 Public
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+  console.log(email, password)
   const user = await User.findOne({email})
     //check user and password match
     if (user && (await bcrypt.compare(password, user.password))){

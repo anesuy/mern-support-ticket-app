@@ -1,9 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
 import {FaUser} from 'react-icons/fa'
 import {toast} from 'react-toastify'
-//userSelector = select from our global state
 import {useSelector, useDispatch} from 'react-redux'
-import {register} from '../features/auth/authSlice'
+import {register, reset} from '../features/auth/authSlice'
+import Spinner from '../components/Spinner'
+
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -14,23 +16,25 @@ export default function Register() {
   })
 
   const { name, email, password, password2} = form;
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, isLoading, isSuccess, message } = useSelector((state) => state.auth)
+  const { isLoading } = useSelector(state => state.auth)
 
   const onChange = (e) => {
+    const {name, value} = e.target;
     setForm((prevState) => (
       {
       ...prevState,
-      [e.target.name]: [e.target.value]
+      [name]: value,
       }
     ))
   }
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (password !== password2){
-      toast.error('Passwords do not match')
+    
+    if (password!== password2){
+      toast.error('Passwords do not match');
     } else {
       const userData = {
         name: name, 
@@ -38,14 +42,27 @@ export default function Register() {
         password: password,
       }
       dispatch(register(userData))
+        .unwrap()
+        .then((user) => {
+          let { name } = user;
+          toast.success(`Registered new user - ${name}`);
+          navigate('/');
+        })
+        .catch(toast.error);
     }
+  }
+
+  if (isLoading) {
+    return (
+      <Spinner/>
+    )
   }
 
   return (
     <>
       <section className="heading">
         <h1>
-          <FaUser/> Register {user}
+          <FaUser/> Register
         </h1>
         <p> Please create an account </p>
       </section>

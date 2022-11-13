@@ -5,8 +5,8 @@
 
   const statusCode = res.statusCode < 400 ? 500 : res.statusCode
 
-  console.log('error middleware')
-
+  console.log(`Error middleware: ${error.message}`.red.underline.bold)
+  
   res.status(statusCode)
   res.json({
     message: error.message,
