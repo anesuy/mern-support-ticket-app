@@ -52,7 +52,8 @@ const registerUser = asyncHandler(async (req, res) => {
 //@access                 Public
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-    const user = await User.findOne({email})
+  
+  const user = await User.findOne({email})
     //check user and password match
     if (user && (await bcrypt.compare(password, user.password))){
       res.status(200).json({
@@ -65,8 +66,6 @@ const loginUser = asyncHandler(async (req, res) => {
       res.status(401)
       throw new Error ('Invalid credentials!')
     }
-
-  //res.send('Login Route') npt needed anymore
 })
 
 //@generateToken
