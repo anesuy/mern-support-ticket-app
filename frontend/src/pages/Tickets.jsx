@@ -1,14 +1,14 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getTickets } from '../features/tickets/ticketSlice'
-import Spinner from '../components/Spinner'
 import BackButton from '../components/BackButton'
 import TicketItem from '../components/TicketItem'
+import Spinner from '../components/Spinner'
 
 function Tickets() {
   const { tickets } = useSelector((state) => state.tickets)
   console.log(tickets)
-
+  
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -21,7 +21,7 @@ function Tickets() {
 
   return (
     <>
-      <BackButton />
+      <BackButton url='/'/>
       <h1>Tickets</h1>
       <div className='tickets'>
         <div className='ticket-headings'>
@@ -31,7 +31,7 @@ function Tickets() {
           <div></div>
         </div>
         {tickets.map((ticket) => (
-          <TicketItem key={ticket._id} ticket={ticket} />
+          <TicketItem key={ticket?._id} ticket={ticket} />
         ))}
       </div>
     </>

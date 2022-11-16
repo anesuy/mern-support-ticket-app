@@ -6,7 +6,7 @@ function TicketItem({ ticket }) {
       <div>{new Date(ticket.createdAt).toLocaleString('pt-BR')}</div>
       <div>{ticket.product}</div>
       <div className={`status status-${ticket.status}`}>{ticket.status}</div>
-      <Link to={`/ticket/${ticket._id}`} className='btn btn-reverse btn-sm'>
+      <Link to={`/tickets/${ticket._id}`} state={{ ticket: ticket }} className='btn btn-reverse btn-sm'>
         View
       </Link>
     </div>
