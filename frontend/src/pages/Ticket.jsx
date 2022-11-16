@@ -8,8 +8,6 @@ import BackButton from '../components/BackButton'
 import Spinner from '../components/Spinner'
 
 function Ticket() {
-  const [modalIsOpen, setModalIsOpen] = useState(false)
-
   const { tickets } = useSelector((state) => state.tickets)
   
   const navigate = useNavigate()
@@ -24,8 +22,15 @@ function Ticket() {
   
   }, [ticketId, dispatch])
 
-
-  const openCloseModal = () => setModalIsOpen(!modalIsOpen)
+  const onTicketClose = () => {
+    dispatch(closeTicket(ticketId))
+      .unwrap()
+      .then(() => {
+        toast.success('Ticket Closed')
+        navigate('/tickets')
+      })
+      .catch(toast.error)
+  }
   
   if (!ticket) {
     return <Spinner />
@@ -52,15 +57,12 @@ function Ticket() {
         </div>
         <h2>Notes</h2>
       </header>
-
       {ticket.status !== 'closed' && (
-        <button onClick={openCloseModal} className='btn'>
-          <FaPlus /> Add Note
+        <button onClick={onTicketClose} className='btn btn-block btn-danger'>
+          Close Ticket
         </button>
-      )}
-
+      )}  
     </div>
-
   )
 }
 
