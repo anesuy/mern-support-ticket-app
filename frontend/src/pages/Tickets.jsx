@@ -7,8 +7,7 @@ import Spinner from '../components/Spinner'
 
 function Tickets() {
   const { tickets } = useSelector((state) => state.tickets)
-  console.log(tickets)
-  
+    
   const dispatch = useDispatch()
 
   useEffect(() => {

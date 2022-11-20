@@ -13,10 +13,10 @@ export default function Login() {
     password: '',
     password2: ''
   })
-  const { name, email, password, password2} = form
+  const { email, password } = form
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, isLoading, isSuccess, message } = useSelector((state) => state.auth)
+  const { isLoading} = useSelector((state) => state.auth)
 
   const onChange = (e) => {
     setForm((prevState) => (

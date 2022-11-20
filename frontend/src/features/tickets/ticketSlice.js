@@ -45,8 +45,8 @@ export const createTicket = createAsyncThunk('tickets/create', async (ticket, th
     return await ticketService.create(ticket, token)
   } 
   catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
-    return thunkAPI.rejectWithValue(message)
+    return thunkAPI.rejectWithValue(error.toString())
+
   }
 })
 
@@ -56,8 +56,7 @@ export const getTickets = createAsyncThunk('tickets/getAll', async (_, thunkAPI)
     return await ticketService.getTickets(token)
   } 
   catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
-    return thunkAPI.rejectWithValue(message)
+    return thunkAPI.rejectWithValue(error.toString())
   }
   
 })
@@ -68,8 +67,7 @@ export const getTicket = createAsyncThunk('tickets/getTicket', async (ticketId, 
     return await ticketService.getTicket(ticketId, token)
   } 
   catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
-    return thunkAPI.rejectWithValue(message)
+    return thunkAPI.rejectWithValue(error.response.data.message)
   }
   
 })
@@ -81,8 +79,7 @@ export const closeTicket = createAsyncThunk(
       const token = thunkAPI.getState().auth.user.token
       return await ticketService.closeTicket(ticketId, token)
     } catch (error) {
-      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
-      return thunkAPI.rejectWithValue(message)
+      return thunkAPI.rejectWithValue(error.response.data.message)
     }
   }
 )
